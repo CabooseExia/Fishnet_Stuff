@@ -2,7 +2,7 @@ import pdb
 import os
 import csv
 import pandas as pd
-import constant_vars
+import Constant_vars
 from datetime import datetime
 
 input_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_sales'
@@ -34,7 +34,7 @@ def sort(path):
                     code = row[1].split(":")[1].removeprefix(" ")
                     data_row.append(code)
                     try:
-                        data_row.append(constant_vars.Internal_dict[code]) #finds the name in the dict
+                        data_row.append(Constant_vars.Internal_dict[code]) #finds the name in the dict
                     except:
                         data_row.append("The code here in inconsistant with 'storebest stocks' google sheets") #can't find the name
 

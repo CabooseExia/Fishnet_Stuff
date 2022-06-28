@@ -2,7 +2,7 @@ import pdb
 import csv
 import os
 import pandas as pd
-import constant_vars
+import Constant_vars
 
 ###   paths and such   ###
 main_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_stock//data//main'
@@ -50,7 +50,7 @@ def cleaner(csv_file):
             if row[1] == '': # to ignore last row
                 continue
             
-            if row[0] in constant_vars.by_kg: # sorts data to 2 well names (ur welcome) lists
+            if row[0] in Constant_vars.by_kg: # sorts data to 2 well names (ur welcome) lists
                 data_by_kg.append((row[0], row[1], float(row[4].replace(',',''))))
             else:
                 data.append((row[0], row[1], float(row[4].replace(',',''))))
@@ -106,12 +106,12 @@ def combiner(path_to_main, path_to_months):
                 continue
 
                 
-            if row[0] in constant_vars.by_kg:
+            if row[0] in Constant_vars.by_kg:
                 main_dict_by_kg[row] = []
             else:
                 main_dict[row] = []
         
-        for month in reversed(constant_vars.months): #for all files
+        for month in reversed(Constant_vars.months): #for all files
             if f'{month}.csv' in months_with_data:
                 counter += 1
                 header.insert(2, month)
