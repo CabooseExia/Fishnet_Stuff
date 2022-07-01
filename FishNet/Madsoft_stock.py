@@ -18,8 +18,7 @@ def convert_excel_to_csv(excel_file):
     to_delete.append(output_file_name)
     print(f'converted {os.path.basename(excel_file)} to a csv_file')
 
-def mass_insert_function_here(input_path,  function): #this gives an error? but seems to work
-
+def mass_insert_function_here(input_path,  function): 
     files = os.listdir(input_path)
 
     if function == cleaner: #lol this is trash
