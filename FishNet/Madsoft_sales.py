@@ -106,16 +106,12 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
         os.remove(i)
     
     print(f'Doned Pandamart {file_name}')
-
-
-
     
-                        
 
 sort(input_path)
 
 while True:
-    pandamart = input("Combine for pandamart? y/n")
+    pandamart = input("Combine for pandamart? y/n : ")
     if pandamart == "y" or pandamart == "Y":
         combine()
         break
