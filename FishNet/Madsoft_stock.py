@@ -168,6 +168,7 @@ def main_func():
     combiner(main_path, months_path)
 
     for i in to_delete:
+        print(f'Deleted {i}')
         os.remove(i)
 
 

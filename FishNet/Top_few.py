@@ -2,7 +2,7 @@ import csv
 import os
 import pandas as pd
 import pdb
-import constant_vars
+import Constant_vars
 
 main_path = 'C://Users//User//Desktop//Data_analytics//Top_few'
 
@@ -27,7 +27,7 @@ def top_few(excel, top_number):
                 header = (row[0],row[1], row[4])
                 header_buffer = 0
                 continue
-            if row[0] in constant_vars.internal_code_list and row[0] not in constant_vars.by_kg:
+            if row[0] in Constant_vars.internal_code_list and row[0] not in Constant_vars.by_kg:
                 data.append((row[0],row[1], float(row[4])))
         
         sorted_data = sorted(data, key = lambda x: x[2], reverse = True)

@@ -34,7 +34,7 @@ def sort(path):
                     code = row[1].split(":")[1].removeprefix(" ")
                     data_row.append(code)
                     try:
-                        data_row.append(Constant_vars.Internal_dict[code]) #finds the name in the dict
+                        data_row.append(Constant_vars.Madsoft_dict[code]) #finds the name in the dict
                     except:
                         data_row.append("The code here in inconsistant with 'storebest stocks' google sheets") #can't find the name
 

@@ -6,7 +6,7 @@ import pyperclip
 
 path = 'C://Users//User//Desktop//food_dict.xlsx'
 
-def main(): # to help me copy pasta for constant vars dict
+def main(): # to help me copy pasta constant vars dict
     copy_pasta = {}
     with open(path,'r') as yes:
         temp = f'{path[:-4]}csv'
