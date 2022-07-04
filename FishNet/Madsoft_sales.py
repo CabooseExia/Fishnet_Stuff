@@ -46,7 +46,6 @@ def sort(path):
                     else:
                         continue
     
-
         sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
         output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
         output = open(output_file, 'w', newline = '')
