@@ -1,6 +1,7 @@
 import pdb
 import csv
 import os
+from tkinter import Y
 import pandas as pd
 import Constant_vars
 
@@ -10,6 +11,7 @@ months_path = "C://Users//User//Desktop//Data_analytics//Madsoft_stock//data//mo
 ###   i hope it works   ###
 
 to_delete = []
+for_top_few = ''
 
 def convert_excel_to_csv(excel_file):
     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
@@ -153,8 +155,37 @@ def combiner(path_to_main, path_to_months):
         data_by_kg = tuple(main_dict_by_kg.items())
         for item in data_by_kg:
             writer.writerow([item[0][0], item[0][1]] + item[1] + [item[0][2]])
-        
+
+    global for_top_few 
+    for_top_few = f"{output_path}_overall_report.csv"
     print('combined, why did this take so long')
+
+
+def top_few(csv_file, top_number):
+    global for_top_few
+ 
+    data = []
+    with open(csv_file,'r',) as csv_file:
+        csv_file = csv.reader(csv_file)
+        header_buffer = 1
+        for row in csv_file:
+            if header_buffer == 1:
+                header = row
+                header_buffer = 0
+                continue
+            if row[0] in Constant_vars.internal_code_list and row[0] not in Constant_vars.by_kg:
+                monthly_output = list(float(x) for x in row[2:])
+                data.append((row[0:2]) + monthly_output)
+        sorted_data = sorted(data, key = lambda x: int(x[-1]), reverse = True)
+
+    output = open(for_top_few,'w', newline='')
+    writer = csv.writer(output)
+
+    writer.writerow(header)
+    for rows in range(int(top_number)):
+        writer.writerow(sorted_data[rows])
+    
+    print(f'Done calculating top {top_number}')
 
 def main_func():
     master_file_name = os.listdir(main_path) #should have 1 item
@@ -169,6 +200,24 @@ def main_func():
     for i in to_delete:
         print(f'Deleted {i}')
         os.remove(i)
+    
+    while True:
+        calc_top_few = input("Do you want the top few? y/n : ")
+        if calc_top_few == 'y' or calc_top_few == 'Y':
+            number = input("Top how many? : ")
+            try:
+                top_few(for_top_few, int(number))
+                break
+            except:
+                print('That is not a number... try again')
+                continue
+        elif calc_top_few == 'n' or calc_top_few == 'N':
+            print('ok can')
+            break
+        else:
+            print('ding dong wrong input, y or n...')
+
+
 
 
     print("This took me way too long")
