@@ -84,7 +84,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
                     new = row[2:]
                     total = []
                     for i in range(len(new)):
-                        total.append(prev[i] + float(new[i])) #vector adding bby. numpy didnt work
+                        total.append(prev[i] + float(new[i])) #vector adding baby. numpy didnt work
                     food_dict[(row[0], row[1])] = total
                 else:
                     food_dict[(row[0], row[1])] = [float(x) for x in row[2:]]
@@ -92,7 +92,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     data = tuple(food_dict.items())
     sorted_data = sorted(data, key = lambda x: x[1][-1], reverse=True)
 
-    file_name = f'{input_path}//output//Pandamart_report_{datetime.today().strftime("%d-%m-%Y")}.csv' #so it would give a diff filename for diff days, easier to collate overtime
+    file_name = f'{input_path}//output//Pandamart_report_{datetime.today().strftime("%d-%m-%Y")}.csv' #so it would give a diff file name for diff days, easier to collate over time
     output = open(file_name,'w', newline='')
     writer = csv.writer(output)
 

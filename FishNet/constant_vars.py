@@ -1,13 +1,16 @@
 ###   The internal codes that count by weight(kg)   ###
 squid = ["SQ005A", "SQ006A"]
 fish = ["S001A", "S003A", "F06", "F91"]
-lobster = ["L02", "L05", "L06", "L07", "L08", "L86"]
-crab = ["CR004A", "CR001A", "C18", "C22"]
+tuna = ['T001A', 'T005A']
+lobster = ["L02", "L05", "L06", "L07", "L08", "L86", 'L006A']
+crab = ["CR004A", "CR001A", "C18", "C22", 'CR010A']
 octopus = ["O21"]
 scallop = ["SC001", "SC002", "SC003"]
+prawn = ['PV008A', 'PV013A', 'PV015A', 'PV014A', 'PV012A', 'PT002A', 'PT001A']
+mussel = ['M001A', 'M003A']
 misc = ["O52"] #clam meat
 
-by_kg = squid + fish + lobster + crab + octopus + scallop + misc
+by_kg = squid + fish + tuna + lobster + crab + octopus + scallop + prawn + mussel + misc
 
 
 ###   The entire internal code list   ###

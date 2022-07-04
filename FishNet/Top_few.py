@@ -4,7 +4,7 @@ import pandas as pd
 import pdb
 import Constant_vars
 
-main_path = 'C://Users//User//Desktop//Data_analytics//Top_few'
+main_path = 'C://Users//User//Desktop//Data_analytics//Top_few' #not useful anymore, integrated into Madsoft_stock.py
 
 def convert_excel_to_csv(excel_file):
     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
