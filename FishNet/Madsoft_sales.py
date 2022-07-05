@@ -9,7 +9,7 @@ input_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_sales'
 files_to_go_through = []
 csv_files = []
 
-def sort(path):
+def sort_by_total_sold(path, hazlan_data):
     files = os.listdir(path)
 
     header_buffer = 1
@@ -51,9 +51,18 @@ def sort(path):
                         data_row = []
                     else:
                         continue
-    
-        sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
-        sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
+
+        while True:
+            if hazlan_data == 'n' or hazlan_data == 'N':
+                sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
+                sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
+                break
+            elif hazlan_data == 'y' or hazlan_data == 'Y':
+                sorted_data = sorted(data, key = lambda x: x[0], reverse=False)
+                sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=False)
+                break
+            else:
+                hazlan_data = input("Try again. y/n : ")
         output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
         output = open(output_file, 'w', newline = '')
         writer = csv.writer(output)
@@ -147,7 +156,9 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     
 
 def main():
-    sort(input_path)
+    for_hazlan = input('is the data for Hazlan? y/n : ')
+    sort_by_total_sold(input_path, for_hazlan)
+    global csv_files
 
     if files_to_go_through:
         while True:
