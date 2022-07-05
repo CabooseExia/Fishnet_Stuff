@@ -58,12 +58,12 @@ def sort_by_total_sold(path):
             if hazlan_data == '2':
                 sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
-                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_sold_report.csv'
                 break
             elif hazlan_data == '1':
                 sorted_data = sorted(data, key = lambda x: x[0], reverse=False)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=False)
-                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_stockcode_report.csv'
                 break
             else:
                 print('Try again, I know its hard to press "1" or "2". You can do it')
@@ -89,16 +89,13 @@ def sort_by_total_sold(path):
 
 
 def combine(): #for foodpanda bulk for now. need to combine 3 reports
+    global csv_files
+    csv_delete = csv_files.copy()
+    
     food_dict = {}
     food_dict_by_kg = {}
     header_buffer = 1
-    files = []
-    for file in files_to_go_through: #gets the correct new files to go through
-        filedir = os.path.dirname(file)
-        name = os.path.splitext(os.path.basename(file))[0]
-        files.append(f'{filedir}//Output//{name}_report.csv')
-
-    for item in files: # opens each file one by one to get all the data
+    for item in csv_files: # opens each file one by one to get all the data
         with open(item, 'r') as file:
             file = csv.reader(file)
             for row in file:
@@ -153,11 +150,10 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
             writer.writerow(list(row[0]) + list(row[1]))
     csv_files.append(file_name)
 
-
-    for i in files:
-        print(f'Deleted {i}')
+    for i in csv_delete:
+        csv_files.remove(i)
         os.remove(i)
-    
+        print(f"Deleted {os.path.basename(i)}")    
     print(f'Doned Pandamart {file_name}')
     
 
@@ -169,10 +165,10 @@ def main():
         while True:
             pandamart = input("Combine for pandamart? y/n : ")
             if pandamart == "y" or pandamart == "Y":
-                csv_files = []
                 combine()
                 break
             elif pandamart == "n" or pandamart == "N":
+                csv_delete = csv_files
                 print('ok can')
                 break
             else:
@@ -184,6 +180,7 @@ def main():
             os.remove(file)
 
             print(f'Converted {os.path.basename(file)} to an excel file')
+            
     else:
         print("No files")
 
