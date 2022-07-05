@@ -11,6 +11,7 @@ months_path = "C://Users//User//Desktop//Data_analytics//Madsoft_stock//data//mo
 
 to_delete = []
 for_top_few = ''
+final_path = ''
 
 def convert_excel_to_csv(excel_file):
     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
@@ -74,6 +75,8 @@ def cleaner(csv_file):
         print(f"Cleaned {os.path.basename(file_path)}.csv")
 
 def combiner(path_to_main, path_to_months):
+    global for_top_few
+    global final_path
     master_file_names = os.listdir(path_to_main)
     for i in master_file_names:
         if i.endswith(".csv"):
@@ -155,13 +158,14 @@ def combiner(path_to_main, path_to_months):
         for item in data_by_kg:
             writer.writerow([item[0][0], item[0][1]] + item[1] + [item[0][2]])
 
-    global for_top_few 
     for_top_few = f"{output_path}_overall_report.csv"
+    final_path = f"{output_path}_overall_report.csv"
+
     print('combined, why did this take so long')
 
 
 def top_few(csv_file, top_number):
-    global for_top_few
+    global final_path
  
     data = []
     with open(csv_file,'r',) as csv_file:
@@ -177,13 +181,15 @@ def top_few(csv_file, top_number):
                 data.append((row[0:2]) + monthly_output)
         sorted_data = sorted(data, key = lambda x: int(x[-1]), reverse = True)
 
-    output = open(for_top_few,'w', newline='')
+    output = open(for_top_few, 'w', newline='')
     writer = csv.writer(output)
 
     writer.writerow(header)
     for rows in range(int(top_number)):
         writer.writerow(sorted_data[rows])
     
+
+    final_path = for_top_few
     print(f'Done calculating top {top_number}')
 
 def main_func():
@@ -215,6 +221,11 @@ def main_func():
             break
         else:
             print('ding dong wrong input, y or n...')
+        
+    read_file = pd.read_csv(final_path)
+    read_file.to_excel(f'{os.path.splitext(final_path)[0]}.xlsx', index=None, header=True)
+    os.remove(final_path)
+    print(f'Converted {os.path.basename(final_path)} to excel')
 
 
 
