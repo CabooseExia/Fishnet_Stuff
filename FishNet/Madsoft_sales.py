@@ -7,9 +7,11 @@ from datetime import datetime
 
 input_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_sales'
 files_to_go_through = []
+csv_files = []
 
 def sort(path):
     files = os.listdir(path)
+
     header_buffer = 1
     for file in files: #this creates a copy of the excel file but as a csv
         if file.endswith('xls'):
@@ -64,8 +66,10 @@ def sort(path):
         writer.writerow(header)
         for row in sorted_data_by_kg:
             writer.writerow(row)
+        csv_files.append(output_file)
 
         print(f'Done with {output_file}')
+        
         os.remove(file)
 
 
@@ -126,11 +130,13 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     writer.writerow(header)
     for row in sorted_data:
         writer.writerow(list(row[0]) + list(row[1]))
-    writer.writerow('\n')
-    writer.writerow(["By weight",])
-    writer.writerow(header)
-    for row in sorted_data_by_kg:
-        writer.writerow(list(row[0]) + list(row[1]))
+    if data_by_kg:
+        writer.writerow('\n')
+        writer.writerow(["By weight",])
+        writer.writerow(header)
+        for row in sorted_data_by_kg:
+            writer.writerow(list(row[0]) + list(row[1]))
+    csv_files.append(file_name)
 
 
     for i in files:
@@ -140,15 +146,30 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     print(f'Doned Pandamart {file_name}')
     
 
-sort(input_path)
+def main():
+    sort(input_path)
 
-while True:
-    pandamart = input("Combine for pandamart? y/n : ")
-    if pandamart == "y" or pandamart == "Y":
-        combine()
-        break
-    elif pandamart == "n" or pandamart == "N":
-        print('ok can')
-        break
+    if files_to_go_through:
+        while True:
+            pandamart = input("Combine for pandamart? y/n : ")
+            if pandamart == "y" or pandamart == "Y":
+                csv_files = []
+                combine()
+                break
+            elif pandamart == "n" or pandamart == "N":
+                print('ok can')
+                break
+            else:
+                print('ding dong wrong input, y or n...')
+
+        for file in csv_files:
+            read_file = pd.read_csv(file)
+            read_file.to_excel(f'{os.path.splitext(file)[0]}.xlsx', index=None, header=True)
+            os.remove(file)
+
+            print(f'Converted {os.path.basename(file)} to an excel file')
     else:
-        print('ding dong wrong input, y or n...')
+        print("No files")
+
+
+main()
