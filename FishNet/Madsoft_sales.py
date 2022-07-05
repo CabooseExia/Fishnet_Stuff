@@ -9,7 +9,7 @@ input_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_sales'
 files_to_go_through = []
 csv_files = []
 
-def sort_by_total_sold(path, hazlan_data):
+def sort_by_total_sold(path):
     files = os.listdir(path)
 
     header_buffer = 1
@@ -20,6 +20,8 @@ def sort_by_total_sold(path, hazlan_data):
             read_excel = pd.read_excel(f'{path}//{file}')
             read_excel.to_csv(temp, index=None)
             files_to_go_through.append(temp)
+            
+    hazlan_data = input('Order by Stock code,"1" or quantity sold,"2" : ')
 
     for file in files_to_go_through: # goes through each file and creates a sorted csv, aka smth_report.csv
         data = []
@@ -53,28 +55,32 @@ def sort_by_total_sold(path, hazlan_data):
                         continue
 
         while True:
-            if hazlan_data == 'n' or hazlan_data == 'N':
+            if hazlan_data == '2':
                 sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
                 break
-            elif hazlan_data == 'y' or hazlan_data == 'Y':
+            elif hazlan_data == '1':
                 sorted_data = sorted(data, key = lambda x: x[0], reverse=False)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=False)
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
                 break
             else:
-                hazlan_data = input("Try again. y/n : ")
-        output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_report.csv'
+                print('Try again, I know its hard to press "1" or "2". You can do it')
+                hazlan_data = input('"1" for Stock code, "2" for Quantity sold')
+            
         output = open(output_file, 'w', newline = '')
         writer = csv.writer(output)
 
         writer.writerow(header)
         for row in sorted_data:
             writer.writerow(row)
-        writer.writerow('\n')
-        writer.writerow(["By weight",])
-        writer.writerow(header)
-        for row in sorted_data_by_kg:
-            writer.writerow(row)
+        if data_by_kg:
+            writer.writerow('\n')
+            writer.writerow(["By weight",])
+            writer.writerow(header)
+            for row in sorted_data_by_kg:
+                writer.writerow(row)
         csv_files.append(output_file)
 
         print(f'Done with {output_file}')
@@ -139,7 +145,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     writer.writerow(header)
     for row in sorted_data:
         writer.writerow(list(row[0]) + list(row[1]))
-    if data_by_kg:
+    if data_by_kg: #does not print if it does not exist
         writer.writerow('\n')
         writer.writerow(["By weight",])
         writer.writerow(header)
@@ -156,8 +162,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     
 
 def main():
-    for_hazlan = input('is the data for Hazlan? y/n : ')
-    sort_by_total_sold(input_path, for_hazlan)
+    sort_by_total_sold(input_path)
     global csv_files
 
     if files_to_go_through:
