@@ -168,7 +168,6 @@ def main():
                 combine()
                 break
             elif pandamart == "n" or pandamart == "N":
-                csv_delete = csv_files
                 print('ok can')
                 break
             else:
