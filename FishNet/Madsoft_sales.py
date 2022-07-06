@@ -9,7 +9,7 @@ input_path = 'C://Users//User//Desktop//Data_analytics//Madsoft_sales'
 files_to_go_through = []
 csv_files = []
 
-def sort_by_total_sold(path):
+def sorter(path):
     files = os.listdir(path)
 
     header_buffer = 1
@@ -21,15 +21,17 @@ def sort_by_total_sold(path):
             read_excel.to_csv(temp, index=None)
             files_to_go_through.append(temp)
             
-    hazlan_data = input('Order by Stock code,"1" or quantity sold,"2" : ')
+    data_type = input('Order by Stock code(1), quantity sold(2) or PowerBi(3) : ')
 
     for file in files_to_go_through: # goes through each file and creates a sorted csv, aka smth_report.csv
         data = []
         data_by_kg = []
         data_row = []
+        current_row = 0
         with open(file, 'r') as csv_file:
             csv_file = csv.reader(csv_file)
             for row in csv_file:
+                current_row += 1
                 if header_buffer == 1: #to create header
                     header = ["Stock code", "Name"] + row[3:]
                     header_buffer = 0
@@ -55,30 +57,36 @@ def sort_by_total_sold(path):
                         continue
 
         while True:
-            if hazlan_data == '2':
-                sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
-                sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
-                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_sold_report.csv'
-                break
-            elif hazlan_data == '1':
+            if data_type == '1':
                 sorted_data = sorted(data, key = lambda x: x[0], reverse=False)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=False)
-                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_stockcode_report.csv'
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_stockcode_report.csv' #this is for Hazlan
+                break
+            elif data_type == '2':
+                sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
+                sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_sold_report.csv' #this is for weekly(?) reports
+                break
+            elif data_type == '3':
+                sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
+                sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=True)
+                output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_PowerBi_report.csv' #this is for Ethan... though i dont think this was needed...
                 break
             else:
-                print('Try again, I know its hard to press "1" or "2". You can do it')
-                hazlan_data = input('"1" for Stock code, "2" for Quantity sold')
+                print('Try again, I know its hard to press "1", "2" or "3". You can do it')
+                data_type = input('"1" for Stock code, "2" for Quantity sold, "3" for PowerBi')
             
         output = open(output_file, 'w', newline = '')
         writer = csv.writer(output)
-
+     
         writer.writerow(header)
         for row in sorted_data:
             writer.writerow(row)
         if data_by_kg:
-            writer.writerow('\n')
-            writer.writerow(["By weight",])
-            writer.writerow(header)
+            if data_type != '3':
+                writer.writerow('\n')
+                writer.writerow(["By weight",])
+                writer.writerow(header)
             for row in sorted_data_by_kg:
                 writer.writerow(row)
         csv_files.append(output_file)
@@ -158,11 +166,12 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     
 
 def main():
-    sort_by_total_sold(input_path)
     global csv_files
 
+    sorter(input_path) #main sorter
     if files_to_go_through:
-        while True:
+
+        while True: #purely for pandamart rn...
             pandamart = input("Combine for pandamart? y/n : ")
             if pandamart == "y" or pandamart == "Y":
                 combine()
@@ -173,7 +182,7 @@ def main():
             else:
                 print('ding dong wrong input, y or n...')
 
-        for file in csv_files:
+        for file in csv_files: #to clean up csv files made
             read_file = pd.read_csv(file)
             read_file.to_excel(f'{os.path.splitext(file)[0]}.xlsx', index=None, header=True)
             os.remove(file)
