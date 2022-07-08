@@ -21,7 +21,7 @@ def sorter(path):
             read_excel.to_csv(temp, index=None)
             files_to_go_through.append(temp)
             
-    data_type = input('Order by Stock code(1), quantity sold(2) or PowerBi(3) : ')
+    data_type = input('Order by Stock code(1) or quantity sold(2)')
 
     for file in files_to_go_through: # goes through each file and creates a sorted csv, aka smth_report.csv
         data = []
@@ -67,14 +67,14 @@ def sorter(path):
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[-1], reverse=True)
                 output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_by_sold_report.csv' #this is for weekly(?) reports
                 break
-            elif data_type == '3':
+            elif data_type == 'ethan': #this is now a hidden feature :)
                 sorted_data = sorted(data, key = lambda x: x[-1], reverse=True)
                 sorted_data_by_kg = sorted(data_by_kg, key = lambda x: x[0], reverse=True)
                 output_file = f'{os.path.dirname(file)}//Output//{os.path.splitext(os.path.basename(file))[0]}_PowerBi_report.csv' #this is for Ethan... though i dont think this was needed...
                 break
             else:
-                print('Try again, I know its hard to press "1", "2" or "3". You can do it')
-                data_type = input('"1" for Stock code, "2" for Quantity sold, "3" for PowerBi')
+                print('Try again, I know its hard to press "1" or "2". You can do it')
+                data_type = input('"1" for Stock code, "2" for Quantity sold')
             
         output = open(output_file, 'w', newline = '')
         writer = csv.writer(output)
