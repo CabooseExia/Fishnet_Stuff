@@ -70,9 +70,9 @@ def sorter(csv_path, code_column):
     return output_path
 
 
-def prepare_for_redmart(csv_file):
+def prepare_for_redmart(csv_path):
     
-    with open(csv_file, 'r') as csv_file:
+    with open(csv_path, 'r') as csv_file:
         csv_file = csv.reader(csv_file)
         header_buffer = 1
 
@@ -81,23 +81,30 @@ def prepare_for_redmart(csv_file):
         for row in csv_file:
             if header_buffer == 1:
                 header = row
+                del header[7]
                 header_buffer = 0
                 continue
+
+            key = tuple(row[0:3] + row[4:7] + row[8:])
             
-            key = tuple(row[0:6] + row[7:])
             if key not in rm_dict:
-                rm_dict[key] = row[6]
-                pdb.set_trace()
+                rm_dict[key] = int(row[3])
+            else:
+                rm_dict[key] += int(row[3])
 
+    output_path = f'{os.path.dirname(csv_path)}//temp.csv'
+    output = open(output_path,'w', newline='')
+    writer = csv.writer(output)
 
-            
-            pdb.set_trace()
+    writer.writerow(header)
+    for item in rm_dict.items():
+        writer.writerow(item[0][0:3] + (item[1],) + item[0][3:])
+
+    output.close()
+    return output_path
+
     
 
-
-
-
-        
 
 def main():
     to_delete = []
@@ -128,5 +135,7 @@ def main():
     
     for i in to_delete:
         os.remove(i)
+
+    print('Done')
 
 main()
