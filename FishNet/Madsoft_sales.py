@@ -165,8 +165,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     print(f'Doned Pandamart {file_name}')
     
 
-def main():
-    global csv_files
+if __name__ == '__main__':
 
     sorter(input_path) #main sorter
     if files_to_go_through:
@@ -193,4 +192,3 @@ def main():
         print("No files")
 
 
-main()
