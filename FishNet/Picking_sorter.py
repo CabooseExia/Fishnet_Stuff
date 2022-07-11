@@ -2,6 +2,7 @@ import os
 import csv
 import pandas as pd
 import Constant_vars
+from datetime import datetime
 
 main_dir = 'C://Users//User//Desktop//Ethan//Picking_sorter'
 
@@ -87,7 +88,7 @@ def prepare_for_redmart(csv_path):
             else:
                 rm_dict[key] += int(row[3])
 
-    output_path = f'{os.path.dirname(csv_path)}//temp.csv'
+    output_path = f'{os.path.dirname(csv_path)}//Redmart_{datetime.today().strftime("%d-%m-%Y")}.csv'
     output = open(output_path,'w', newline='')
     writer = csv.writer(output)
 
