@@ -20,6 +20,10 @@ def sorter(path):
             read_excel = pd.read_excel(f'{path}//{file}')
             read_excel.to_csv(temp, index=None)
             files_to_go_through.append(temp)
+    
+    if not files_to_go_through:
+        print('No files')
+        return
             
     data_type = input('Order by Stock code(1) or Quantity sold(2) : ')
 
@@ -189,7 +193,5 @@ if __name__ == '__main__':
 
             print(f'Converted {os.path.basename(file)} to an excel file')
             
-    else:
-        print("No files")
 
 
