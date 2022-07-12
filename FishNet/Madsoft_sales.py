@@ -184,7 +184,7 @@ if __name__ == '__main__':
                 print('ok can')
                 break
             else:
-                print('ding dong wrong input, y or n...')
+                print('ding dong wrong input, y or n... : ')
 
         for file in csv_files: #to clean up csv files made
             read_file = pd.read_csv(file)
@@ -192,6 +192,3 @@ if __name__ == '__main__':
             os.remove(file)
 
             print(f'Converted {os.path.basename(file)} to an excel file')
-            
-
-
