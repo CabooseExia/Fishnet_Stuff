@@ -192,7 +192,7 @@ def top_few(csv_file, top_number):
     final_path = for_top_few
     print(f'Done calculating top {top_number}')
 
-def main_func():
+if __name__ == "__main__":
     master_file_name = os.listdir(main_path) #should have 1 item
     master_file_path = f'{main_path}//{master_file_name[0]}'
 
@@ -233,4 +233,3 @@ def main_func():
     print("This took me way too long")
 
 
-main_func()

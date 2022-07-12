@@ -21,7 +21,7 @@ def sorter(path):
             read_excel.to_csv(temp, index=None)
             files_to_go_through.append(temp)
             
-    data_type = input('Order by Stock code(1) or quantity sold(2)')
+    data_type = input('Order by Stock code(1) or Quantity sold(2) : ')
 
     for file in files_to_go_through: # goes through each file and creates a sorted csv, aka smth_report.csv
         data = []
@@ -108,7 +108,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
             file = csv.reader(file)
             for row in file:
                 if header_buffer == 1: #to get header. should only use the first file to get it
-                    header = row
+                    header = row ### header may need to be updated. (rank, header, average)
                     header_buffer = 0
                     continue
 
@@ -147,6 +147,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
     output = open(file_name,'w', newline='')
     writer = csv.writer(output)
 
+    # This helps make the csv, if we want to re-order the file it is here
     writer.writerow(header)
     for row in sorted_data:
         writer.writerow(list(row[0]) + list(row[1]))
