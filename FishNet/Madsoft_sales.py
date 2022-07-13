@@ -197,8 +197,6 @@ if __name__ == '__main__':
                 print('ding dong wrong input, y or n... : ')
 
         for file in csv_files: #to clean up csv files made
-            # read_file = pd.read_csv(file)
-            # read_file.to_excel(f'{os.path.splitext(file)[0]}.xlsx', index=None, header=True)
             Constant_vars.convert_csv_to_excel(file)
             os.remove(file)
 

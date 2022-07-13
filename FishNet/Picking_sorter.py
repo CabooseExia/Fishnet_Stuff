@@ -88,8 +88,6 @@ def prepare_for_redmart(csv_path):
     return output_path
 
     
-
-
 def main():
     to_delete = []
     files = os.listdir(main_dir)
@@ -104,8 +102,6 @@ def main():
         else:
             print('Try again')
         
-        
-
     for file in files:
         if file.endswith('.xlsx'):
             csv_in = Constant_vars.convert_excel_to_csv(f'{main_dir}//{file}')

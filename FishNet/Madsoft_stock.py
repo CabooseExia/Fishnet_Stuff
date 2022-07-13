@@ -13,13 +13,6 @@ to_delete = []
 for_top_few = ''
 final_path = ''
 
-# def convert_excel_to_csv(excel_file):
-#     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
-#     read_file = pd.read_excel(excel_file)
-#     read_file.to_csv(output_file_name, index=None)
-#     to_delete.append(output_file_name)
-#     print(f'converted {os.path.basename(excel_file)} to a csv_file')
-
 def mass_insert_function_here(input_path,  function): 
     files = os.listdir(input_path)
 
@@ -58,9 +51,7 @@ def cleaner(csv_file):
                 data_by_kg.append((row[0], row[1], float(row[4].replace(',',''))))
             else:
                 data.append((row[0], row[1], float(row[4].replace(',',''))))
-
-
-            
+                
         output = open(f'{file_path}.csv', 'w', newline="")
         writer = csv.writer(output)
         sorted_data = sorted(data, key = lambda x: x[2], reverse=True)
