@@ -1,3 +1,8 @@
+import os
+import pandas as pd
+import csv
+
+
 ###   The internal codes that count by weight(kg)   ###
 squid = ["SQ005A", "SQ006A"]
 fish = ["S001A", "S003A", "F06", "F91", 'S017A', 'CD001A', 'H006A']
@@ -491,3 +496,21 @@ For_picking = {
     'Slices': Slices, 
     'Chicken': Chicken
     }
+
+
+###   common functions   ###
+def convert_excel_to_csv(excel_file):
+    read_file = pd.read_excel(excel_file)
+    temp = f'{os.path.splitext(excel_file)[0]}.csv'
+    read_file.to_csv(temp, index= 0)
+    return temp
+
+def convert_csv_to_excel(csv_file): #for output
+    read_file = pd.read_csv(csv_file)
+    temp = f'{os.path.splitext(csv_file)[0]}.xlsx'
+    read_file.to_excel(temp, index= 0)
+    return temp
+
+
+
+print('Updated constants')
