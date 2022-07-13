@@ -13,12 +13,12 @@ to_delete = []
 for_top_few = ''
 final_path = ''
 
-def convert_excel_to_csv(excel_file):
-    output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
-    read_file = pd.read_excel(excel_file)
-    read_file.to_csv(output_file_name, index=None)
-    to_delete.append(output_file_name)
-    print(f'converted {os.path.basename(excel_file)} to a csv_file')
+# def convert_excel_to_csv(excel_file):
+#     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
+#     read_file = pd.read_excel(excel_file)
+#     read_file.to_csv(output_file_name, index=None)
+#     to_delete.append(output_file_name)
+#     print(f'converted {os.path.basename(excel_file)} to a csv_file')
 
 def mass_insert_function_here(input_path,  function): 
     files = os.listdir(input_path)
@@ -27,6 +27,9 @@ def mass_insert_function_here(input_path,  function):
         file_type = '.csv'
     else:
         file_type = '.xls'
+        for file in files:
+            file_path = os.path.splitext(f'{input_path}//{file}')[0]
+            to_delete.append(f'{file_path}.csv')
     
     for file in files:
         if file.endswith(file_type):
@@ -196,8 +199,8 @@ if __name__ == "__main__":
     master_file_name = os.listdir(main_path) #should have 1 item
     master_file_path = f'{main_path}//{master_file_name[0]}'
 
-    convert_excel_to_csv(master_file_path)
-    mass_insert_function_here(months_path, convert_excel_to_csv)
+    to_delete.append(Constant_vars.convert_excel_to_csv(master_file_path))
+    mass_insert_function_here(months_path, Constant_vars.convert_excel_to_csv)
     cleaner(f'{os.path.splitext(master_file_path)[0]}.csv')
     mass_insert_function_here(months_path,cleaner)
     combiner(main_path, months_path)
