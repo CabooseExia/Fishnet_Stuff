@@ -1,6 +1,7 @@
 import pdb
 import os
 import csv
+from numpy import average
 import pandas as pd
 import Constant_vars
 from datetime import datetime
@@ -31,13 +32,11 @@ def sorter(path):
         data = []
         data_by_kg = []
         data_row = []
-        current_row = 0
         with open(file, 'r') as csv_file:
             csv_file = csv.reader(csv_file)
             for row in csv_file:
-                current_row += 1
                 if header_buffer == 1: #to create header
-                    header = ["Stock code", "Name"] + row[3:]
+                    header = ['Rank', "Stock code", "Name"] + row[3:] + ['Average',]
                     header_buffer = 0
                     continue
             
@@ -50,7 +49,7 @@ def sorter(path):
                         data_row.append("The code here in inconsistant with 'storebest stocks' google sheets") #can't find the name
 
                 elif row[1] == '' and row[2] == '': # only need the row with the final data of the month
-                    data_row += [float(x.replace(",",'')) for x in row[3:]] #this adds the data for the month to the name of the month
+                    data_row += [int(x.replace(",",'')) for x in row[3:]] #this adds the data for the month to the name of the month
                     if len(data_row) == 2 + len(row[3:]): # This is to deal with the last row as it does not have a code or name
                         if data_row[0] not in Constant_vars.by_kg:
                             data.append(data_row)
@@ -78,8 +77,20 @@ def sorter(path):
                 break
             else:
                 print('Try again, I know its hard to press "1" or "2". You can do it')
-                data_type = input('"1" for Stock code, "2" for Quantity sold')
-            
+                data_type = input('"1" for Stock code, "2" for Quantity sold : ')
+        
+        rank = 1
+        for entry in sorted_data:
+            entry.insert(0, rank)
+            entry.append(round(average(entry[3:-1])))
+            rank += 1
+
+        rank = 1
+        for entry in sorted_data_by_kg:
+            entry.insert(0, rank)
+            entry.append(round(average(entry[3:-1])))
+            rank += 1
+           
         output = open(output_file, 'w', newline = '')
         writer = csv.writer(output)
      
@@ -112,7 +123,7 @@ def combine(): #for foodpanda bulk for now. need to combine 3 reports
             file = csv.reader(file)
             for row in file:
                 if header_buffer == 1: #to get header. should only use the first file to get it
-                    header = row ### header may need to be updated. (rank, header, average)
+                    header = row 
                     header_buffer = 0
                     continue
 
