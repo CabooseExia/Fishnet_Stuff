@@ -416,7 +416,7 @@ Freezer_5 = ('SQ001', 'SQ002', 'E002', 'E001', 'F126', 'SQ006', 'CD003', 'SW001'
 Freezer_6 = ('S011', 'S012', 'S013', 'S002', 'S017', 'S003', 'S024', 'S001', 'S019', 'S027')
 Freezer_7 = ('M003', 'VP010', 'PA004', 'TP006', 'TP004', 'PA003', 'L010', 'L011', 'L012')
 
-Freezer_8 = (
+Glass_1 = (
     'CD007',
     'CR004', 'TP002', 
     'CR007', 'O003', 
@@ -424,14 +424,14 @@ Freezer_8 = (
     'ED001', 'U001', 
     'ED002', 'U002'
     )
-Freezer_9 = (
+Glass_2 = (
     'L009', 'S090', 
     'S026', 'TP001', 
     'L002', 'H006', 
     'L001', 'L006', 
     'T009', 'L007'
     )
-Freezer_10 = (
+Glass_3 = (
     'CR008', 'S025', 
     'S020', 'S014', 
     'S021', 'S015', 
@@ -439,7 +439,7 @@ Freezer_10 = (
     'S004', 'MS001', 
     'L005', 'T001'
     )
-Freezer_11 = (
+Glass_4 = (
     'F328', 
     'CD004', 'SQ005', 
     'CD002', 'C096', 
@@ -447,7 +447,7 @@ Freezer_11 = (
     'SQ007', 'SA005', 
     'PV021', 'S082'
     )
-Freezer_12 = (
+Glass_5 = (
     'F347',
     'PV020', 'PV015',
     'PV019', 'PV014',
@@ -483,10 +483,11 @@ For_picking = {
     'Freezer_5': Freezer_5, 
     'Freezer_6': Freezer_6, 
     'Freezer_7': Freezer_7, 
-    'Freezer_8': Freezer_8,
-    'Freezer_9': Freezer_9, 
-    'Freezer_10': Freezer_10, 
-    'Freezer_11': Freezer_11, 
-    'Freezer_12': Freezer_12, 
+    'Glass_1': Glass_1,
+    'Glass_2': Glass_2, 
+    'Glass_3': Glass_3, 
+    'Glass_4': Glass_4, 
+    'Glass_5': Glass_5, 
     'Slices': Slices, 
-    'Chicken': Chicken}
+    'Chicken': Chicken
+    }
