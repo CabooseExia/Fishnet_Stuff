@@ -12,8 +12,6 @@ csv_files = []
 
 def sorter(path):
     files = os.listdir(path)
-
-    header_buffer = 1
     for file in files: #this creates a copy of the excel file but as a csv
         if file.endswith('xls'):
             name = os.path.splitext(file)[0]
@@ -29,6 +27,7 @@ def sorter(path):
     data_type = input('Order by Stock code(1) or Quantity sold(2) : ')
 
     for file in files_to_go_through: # goes through each file and creates a sorted csv, aka smth_report.csv
+        header_buffer = 1
         data = []
         data_by_kg = []
         data_row = []
@@ -49,7 +48,7 @@ def sorter(path):
                         data_row.append("The code here in inconsistant with 'storebest stocks' google sheets") #can't find the name
 
                 elif row[1] == '' and row[2] == '': # only need the row with the final data of the month
-                    data_row += [int(x.replace(",",'')) for x in row[3:]] #this adds the data for the month to the name of the month
+                    data_row += [int(float(x.replace(",",''))) for x in row[3:]] #this adds the data for the month to the name of the month
                     if len(data_row) == 2 + len(row[3:]): # This is to deal with the last row as it does not have a code or name
                         if data_row[0] not in Constant_vars.by_kg:
                             data.append(data_row)
