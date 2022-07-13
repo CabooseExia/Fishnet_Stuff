@@ -97,7 +97,7 @@ def sorter(path):
         for row in sorted_data:
             writer.writerow(row)
         if data_by_kg:
-            if data_type != '3':
+            if data_type != 'ethan':
                 writer.writerow('\n')
                 writer.writerow(["By weight",])
                 writer.writerow(header)
