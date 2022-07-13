@@ -6,17 +6,17 @@ import Constant_vars
 
 main_path = 'C://Users//User//Desktop//Data_analytics//Top_few' #not useful anymore, integrated into Madsoft_stock.py
 
-def convert_excel_to_csv(excel_file):
-    output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
-    read_file = pd.read_excel(excel_file)
-    read_file.to_csv(output_file_name, index=None)
-    print(f'converted {os.path.basename(excel_file)} to a csv_file')
+# def convert_excel_to_csv(excel_file):
+#     output_file_name = f'{os.path.splitext(excel_file)[0]}.csv'
+#     read_file = pd.read_excel(excel_file)
+#     read_file.to_csv(output_file_name, index=None)
+#     print(f'converted {os.path.basename(excel_file)} to a csv_file')
 
-def top_few(excel, top_number):
-    file_path = os.path.dirname(excel)
-    file_name = os.path.basename(excel)
-    csv_path = f'{file_path}//{file_name[:-5]}.csv'
-    convert_excel_to_csv(excel)
+# def top_few(excel, top_number):
+#     file_path = os.path.dirname(excel)
+#     file_name = os.path.basename(excel)
+#     csv_path = f'{file_path}//{file_name[:-5]}.csv'
+#     convert_excel_to_csv(excel)
 
     data = []
     with open(csv_path,'r',) as csv_file:
