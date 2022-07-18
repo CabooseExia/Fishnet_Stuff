@@ -32,24 +32,30 @@ def the_func(path_to_ntuc_file, path_to_remart_file):
                 else:
                     ntuc_row.append('problem') #for debugging purposes
                     redmart_row.append('problem')
-                    output_body.append(ntuc_row[1], ntuc_row[2], redmart_row[0], ntuc_row[3], redmart_row[3], ntuc_row[0], redmart_row[1])
+                    output_body.append((ntuc_row[1], ntuc_row[2], redmart_row[0], ntuc_row[3], redmart_row[3], ntuc_row[0], redmart_row[1]))
 
-    
-                
+    output_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//Wrong_barcodes.csv'
+    output = open(output_path, 'w', newline='')
+    writer = csv.writer(output)
 
-
-
-    # for ntuc_row in ntuc_readfile: 
-    #     pdb.set_trace()
-    #     for redmart_row in redmart_readfile:
-    #         print(f'ntuc = {ntuc_row[1]}, redmart = {redmart_row[2]}')
-    #         if ntuc_row[1] == redmart_row[2]:
-    #             print("yes")
-
+    writer.writerow(output_header)
+    for row in output_body:
+        writer.writerow(row)
+    writer.writerow('\n')
+    writer.writerow(('ntuc unused',))
+    for item in ntuc_list:
+        if len(item) == 6:
+            writer.writerow(item)
+    writer.writerow('\n')
+    writer.writerow(('redmart unused',))
+    for item in redmart_list:
+        if len(item) == 9:
+            writer.writerow(item)
     
 
     ntuc_file.close()
     redmart_file.close()
+    output.close()
 
 
 
