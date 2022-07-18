@@ -1,6 +1,7 @@
 import pdb
 import os
 import csv
+from numpy import double
 import pandas as pd
 import pyperclip
 
@@ -19,4 +20,12 @@ def main(): # to help me copy pasta constant vars dict
     pyperclip.copy(str(copy_pasta))
     os.remove(temp)
 
-main()
+# main()
+
+def double_loop():
+    for i in range(5):
+        for j in range(6):
+            if i == j:
+                print(f'{i},{j}')
+
+double_loop()
