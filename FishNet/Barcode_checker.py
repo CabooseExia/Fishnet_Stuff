@@ -9,18 +9,34 @@ def the_func(path_to_ntuc_file, path_to_remart_file):
 
     ntuc_file = open(ntuc_csv, 'r')
     redmart_file = open(redmart_csv)
-    ntuc_readfile = csv.reader(ntuc_file)
+    ntuc_readfile = csv.reader(ntuc_file) #the readers are trash wtf
     redmart_readfile = csv.reader(redmart_file)
-    # ntuc_header = next(ntuc_readfile)
-    # redmart_header = next(redmart_readfile)
+
+    ntuc_list = []
+    for row in ntuc_readfile:
+        ntuc_list.append(row)
+    redmart_list = []
+    for row in redmart_readfile:
+        redmart_list.append(row)
 
     output_header = ['Internal Code', 'NTUC name', 'Redmart name', 'NTUC barcode', 'Redmart barcode', 'NTUC SKU', 'Redmart RPC']
     output_body = []
 
-    for ntuc_row in ntuc_readfile:
-        pdb.set_trace()
-        for redmart_row in redmart_readfile:
-            print(f'ntuc = {ntuc_row[1]}, redmart = {redmart_row[2]}')
+    for ntuc_row in ntuc_list:
+        for redmart_row in redmart_list:
+            if ntuc_row[1] == redmart_row[2]:
+                print(f'ntuc = {ntuc_row[1]}, redmart = {redmart_row[2]}')
+                if ntuc_row[3] == redmart_row[3]:
+                    ntuc_row.append('no problem')
+                    redmart_row.append('no problem')
+                else:
+                    ntuc_row.append('problem') #for debugging purposes
+                    redmart_row.append('problem')
+                    output_body.append(ntuc_row[1], ntuc_row[2], redmart_row[0], ntuc_row[3], redmart_row[3], ntuc_row[0], redmart_row[1])
+
+    
+                
+
 
 
     # for ntuc_row in ntuc_readfile: 
