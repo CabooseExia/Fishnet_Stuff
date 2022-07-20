@@ -115,6 +115,8 @@ if __name__ == '__main__':
         the_func(f'{ntuc_path}//{ntuc_files[0]}', f'{redmart_path}//{redmart_files[0]}')
  
     else:
+        print('1 excel file in each folder thanks')
+        print('also removing other csv files')
         for i in ntuc_files:
             if i.endswith('csv'):
                 os.remove(f'{ntuc_path}//{i}')
