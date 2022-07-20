@@ -50,33 +50,50 @@ def the_func(path_to_ntuc_file, path_to_remart_file):
                     redmart_row.append('barcode problem')
                     barcode_body.append((ntuc_row[3], ntuc_row[2], redmart_row[0], ntuc_row[1], redmart_row[2], ntuc_row[0], redmart_row[1]))
 
-    output_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//Wrong_barcodes.csv'
-    output = open(output_path, 'w', newline='')
-    writer = csv.writer(output)
+    ic_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//Same internal code.csv'
+    ic = open(ic_path, 'w', newline='')
+    ic_writer = csv.writer(ic)
 
-    writer.writerow(ic_header)
+    barcode_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//Same barcode.csv'
+    barcode = open(barcode_path, 'w', newline='')
+    barcode_writer = csv.writer(barcode)
+
+    # ntuc_issue_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//ntuc issues.csv'
+    # ntuc_issue = open(ntuc_issue_path, 'w', newline='')
+    # ntuc_issue_writer = csv.writer(ntuc_issue)
+
+    # redmart_issue_path = 'C://Users//User//Desktop//Ethan//Barcode_checker//redmart issues.csv'
+    # redmart_issue = open(redmart_issue_path, 'w', newline='')
+    # redmart_issue_writer = csv.writer(redmart_issue)
+
+    ic_writer.writerow(ic_header)
     for row in ic_body:
-        writer.writerow(row)
-    writer.writerow('\n')
-    writer.writerow(barcode_header)
+        ic_writer.writerow(row)
+    ic.close()
+
+    barcode_writer.writerow(barcode_header)
     for row in barcode_body:
-        writer.writerow(row)
-    writer.writerow('\n')
-    writer.writerow(('ntuc unused',))
-    for item in ntuc_list:
-        if len(item) == 6:
-            writer.writerow(item)
-    writer.writerow('\n')
-    writer.writerow(('redmart unused',))
-    for item in redmart_list:
-        if len(item) == 9:
-            writer.writerow(item)
+        barcode_writer.writerow(row)
+    barcode.close()
+
+    # writer.writerow('\n')
+    # writer.writerow(('ntuc unused',))
+    # for item in ntuc_list:
+    #     if len(item) == 6:
+    #         writer.writerow(item)
+    # writer.writerow('\n')
+    # writer.writerow(('redmart unused',))
+    # for item in redmart_list:
+    #     if len(item) == 9:
+    #         writer.writerow(item)
    
-    
+    Constant_vars.convert_csv_to_excel(ic_path)
+    Constant_vars.convert_csv_to_excel(barcode_path)
+    os.remove(ic_path)
+    os.remove(barcode_path)
 
     ntuc_file.close()
     redmart_file.close()
-    output.close()
     os.remove(ntuc_csv)
     os.remove(redmart_csv)
    
